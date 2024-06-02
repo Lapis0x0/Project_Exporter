@@ -19,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -46,7 +46,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.x'
+        python-version: '3.12'
 
     - name: Install dependencies
       run: |
@@ -57,10 +57,13 @@ jobs:
       run: |
         pyinstaller --name ProjectExportTool --onefile --windowed main.py
 
-    - name: Create DMG
+    - name: Prepare DMG build directory
       run: |
         mkdir -p dist/dmg
         cp -r dist/ProjectExportTool.app dist/dmg/ProjectExportTool.app
+
+    - name: Create DMG
+      run: |
         dmgbuild -s dmg_settings.py "ProjectExportTool" "dist/ProjectExportTool.dmg"
 
     - name: Upload artifact

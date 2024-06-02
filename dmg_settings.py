@@ -4,7 +4,7 @@ import os
 
 application_name = "ProjectExportTool"
 app_path = f"dist/dmg/{application_name}.app"
-icon_path = "icon/macos.icns"  # 这里设置你的.icns图标文件路径
+icon_path = "path/to/icon.icns"  # 这里设置你的.icns图标文件路径
 
 # Basic options
 settings = {
