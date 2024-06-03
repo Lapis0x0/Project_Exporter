@@ -24,11 +24,10 @@ class ProjectExportTool(QMainWindow):
         font_id = QFontDatabase.addApplicationFont(font_path)
         if font_id == -1:
             print("字体加载失败")
-            font = QFont("Arial", 10)  # 使用默认字体
         else:
             font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
             font = QFont(font_family, 10)
-        self.setFont(font)
+            self.setFont(font)
 
         # 创建拖拽框
         self.drag_label = QLabel("拖入项目文件夹", self)
