@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile main.py
+          pyinstaller --onefile --add-data "HarmonyOS_Sans_SC_Regular.ttf:." main.py
         shell: bash
 
       - name: Upload Artifacts
