@@ -28,7 +28,14 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --onefile --add-data "HarmonyOS_Sans_SC_Regular.ttf:." main.py
+          if [[ "${{ matrix.os }}" == 'windows-latest' ]]; then
+            pyinstaller --onefile --add-data "HarmonyOS_Sans_SC_Regular.ttf;." main.py
+          elif [[ "${{ matrix.os }}" == 'macos-latest' ]]; then
+            pyinstaller --onefile --add-data "HarmonyOS_Sans_SC_Regular.ttf:." main.py
+            hdiutil create -volname "ProjectExportTool" -srcfolder dist -ov -format UDZO dist/ProjectExportTool.dmg
+          else
+            pyinstaller --onefile --add-data "HarmonyOS_Sans_SC_Regular.ttf:." main.py
+          fi
         shell: bash
 
       - name: Upload Artifacts
@@ -46,11 +53,13 @@ jobs:
         with:
           name: windows-latest-build
           path: ./dist/windows
+
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
           name: macos-latest-build
           path: ./dist/macos
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -78,6 +87,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist/macos/main
-          asset_name: main-macos
+          asset_path: ./dist/macos/ProjectExportTool.dmg
+          asset_name: ProjectExportTool-macos.dmg
           asset_content_type: application/octet-stream
